@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+    frontend:
+      image: frontend
+      ports:
+      - 5000:5000
+      build: .
+      container_name: frontend2
+    backend:
+      image: backend
+      ports:
+      - 8080:8080
+      build: .
+      container_name: backend2
+      command: ["server"]      

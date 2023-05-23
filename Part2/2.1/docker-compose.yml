@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+    # This complains about the container-side of mount being a directory which, according to a ton of googling, 
+    # is because the text.log -file does not exist when container is started.
+    web:
+      image: devopsdockeruh/simple-web-service
+      build: .
+      volumes:
+        - ${PWD}/text.log:/usr/src/app/text.log
+      container_name: simpleweb
