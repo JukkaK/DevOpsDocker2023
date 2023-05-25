@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+    frontend:
+      image: frontend
+      ports:
+      - 5000:5000
+      build: .
+      container_name: frontend5
+    backend:
+      image: backend
+      ports:
+      - 8080:8080
+      environment:
+        REDIS_HOST: redis3
+        POSTGRES_HOST: postgres2
+      build: .
+      container_name: backend5
+      command: ["server"]     
+    redis:
+      image: redis
+      build: .
+      container_name: redis3
+      restart: unless-stopped
+    postgres:
+      image: postgres
+      build: .
+      container_name: postgres2
+      restart: unless-stopped
+      volumes:
+        - type: bind
+          source: ./mount
+          target: /var/lib/postgresql/data
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_DATABASE: postgres      

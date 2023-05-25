@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+    proxy:
+      image: nginx
+      ports:
+      - 80:80
+      build: .
+      container_name: nginx8
+      volumes:
+        - type: bind
+          source: ./mount
+          target: /etc/nginx/
+    frontend:
+      image: frontend
+      ports:
+      - 5000:5000
+      build: .
+      container_name: frontend8
+    backend:
+      image: backend
+      ports:
+      - 8080:8080
+      environment:
+        REDIS_HOST: redis8
+        POSTGRES_HOST: postgres8
+      build: .
+      container_name: backend8
+      command: ["server"]     
+    redis:
+      image: redis
+      build: .
+      container_name: redis8
+      restart: unless-stopped
+    postgres:
+      image: postgres
+      build: .
+      container_name: postgres8
+      restart: unless-stopped
+      volumes:
+        - type: bind
+          source: ./db
+          target: /var/lib/postgresql/data
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_DATABASE: postgres      
