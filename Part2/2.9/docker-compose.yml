@@ -24,6 +24,7 @@ services:
       environment:
         REDIS_HOST: redis9
         POSTGRES_HOST: postgres9
+        REQUEST_ORIGIN: http://localhost        
       build: .
       container_name: backend9
       command: ["server"]     
